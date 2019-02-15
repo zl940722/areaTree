@@ -1,4 +1,4 @@
-import {Get, Controller, Post} from '@nestjs/common';
+import {Get, Controller, Post , Param} from '@nestjs/common';
 import {AppService} from './app.service';
 import {VersionVo} from './model/versionVo';
 import {AreaTreeVo} from './model/areaTreeVo';
@@ -27,6 +27,11 @@ export class AppController {
     @Get('/area/plain')
     getAreaPlain(): AreaTreeVo[] {
         return AppService.getAreaPlain();
+    }
+
+    @Get('/area/tree/:id')
+    getAreaTreeById(@Param('id') id): AreaTreeVo[] {
+        return AppService.getAreaTreeById(`${id}`);
     }
 
     //

@@ -4,7 +4,8 @@ import {AreaTreeVo} from './model/areaTreeVo';
 import {AreaVo} from './model/areaVo';
 import cnP = require('./data/cnP.js');
 import cnT = require('./data/cnT.js');
-import amT = require('./data/amT.js')
+import amT = require('./data/amT.js');
+import _ = require('lodash');
 
 @Injectable()
 export class AppService {
@@ -28,6 +29,17 @@ export class AppService {
     static getAMAreaTree(version: number  = AppService.version): AreaVo[] {
         return JSON.parse(amT);
     }
+
+    static getAreaTreeById(id: string): AreaVo[] {
+        const cnTree = JSON.parse(cnT);
+        const cnTreeById = _.filter(cnTree , (o: any) => {
+            return o.id === _.toInteger(id);
+        });
+        const cnTreeById2 = _.filter(cnTree.children , (o: any) => {
+            return o.id === _.toInteger(id);
+        });
+        return cnTreeById || cnTreeById2;
+    }
     //
     // static addAreaPlain(areaVo: AreaVo): AreaVo {
     //   return 'Hello World!';
@@ -42,7 +54,4 @@ export class AppService {
     //   return 'Hello World!';
     // }
     //
-    // static getAreaTreeByPId(pId: string): AreaTreeVo {
-    //   return 'Hello World!';
-    // }
 }
